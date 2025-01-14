@@ -1,1 +1,3 @@
-*.json linguist-detection=true
+*.json linguist-detection=json
+*.json linguist-detectable
+
