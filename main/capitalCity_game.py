@@ -34,11 +34,14 @@ def play_game(continent):
 def main():
     name = input("What is your name? ").capitalize()
     print(f"Hello {name}! Welcome to the Capital City Game!")
+    vaild_continents = ['Africa', 'Asia' , 'Europe', 'North America', 'South America', 'Oceania']
     continent = input("Which continent would you like to play: ").capitalize()
-    if continent in ['Africa', 'Asia', 'Europe', 'North America', 'Oceania', 'South America']:
-        data = load_data()
-        points = play_game(data[continent])
-        print(f"Game over! You scored {points} points!")
+    while continent not in vaild_continents:
+        print("Invaild input. Please try again")
+        continent = input("Which continent would you like to play: ").capitalize()
+
+    data = load_data()
+    points = play_game(data[continent])
 
 if __name__ == '__main__':
     main()
