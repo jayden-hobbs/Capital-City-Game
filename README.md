@@ -19,6 +19,7 @@ This repo is a guess the capital city game. The program uses a JSON file to hand
 - Add a leaderboard to view top scores. It will list names and dates acheived 🔜
 - Allow the user to select all continents as an option or a select few 🔜
 - Make the experience more aesthetically appealing. Perhaps using tabulate or another imported module 🔜
+- Make sure the user can only choose a valid continent and prompt them till they do so 🔜
 
 
 ---
