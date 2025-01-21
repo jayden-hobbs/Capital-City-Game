@@ -11,25 +11,25 @@ def initialise_database():
         'databaseURL': 'https://capital-city-game-leaderboard-default-rtdb.firebaseio.com/'
     })
 
-def load_leaderboard():
-    ref = db.reference('leaderboard')
+def load_leaderboard(continent):
+    ref = db.reference(f'leaderboards/{continent}')
     leaderboard = ref.get()
     if leaderboard is None:
         return []
     return leaderboard
 
-def save_leaderboard(leaderboard):
-    ref = db.reference('leaderboard')
+def save_leaderboard(continent, leaderboard):
+    ref = db.reference(f'leaderboards/{continent}')
     ref.set(leaderboard)
 
-def display_leaderboard(leaderboard):
+def display_leaderboard(continent, leaderboard):
     if leaderboard:
-        print("\nLeaderboard:")
+        print(f"\nLeaderboard for {continent}:")
         leaderboard = sorted(leaderboard, key=lambda x: x['score'], reverse=True)
         for idx, entry in enumerate(leaderboard, start=1):
             print(f"{idx}. {entry['name']} - {entry['score']} points")
     else:
-        print("\nLeaderboard is empty")
+        print(f"\nLeaderboard for {continent} is empty")
 
 def load_data():
     with open('database.json', 'r') as file:
@@ -74,11 +74,11 @@ def main():
     continent_data = data[continent]
     points = play_game(continent_data)
 
-    leaderboard = load_leaderboard()
+    leaderboard = load_leaderboard(continent)
     leaderboard.append({'name': name, 'score': points})
-    save_leaderboard(leaderboard)
+    save_leaderboard(continent, leaderboard)
 
-    display_leaderboard(leaderboard)
+    display_leaderboard(continent, leaderboard)
 
 if __name__ == '__main__':
     main()
