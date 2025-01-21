@@ -2,15 +2,43 @@
 
 import json
 import random
+import firebase_admin
+from firebase_admin import credentials, db
+
+def initialise_database():
+    cred = credentials.Certificate('credentials.json')
+    firebase_admin.initialize_app(cred, {
+        'databaseURL': 'https://capital-city-game-leaderboard-default-rtdb.firebaseio.com/'
+    })
+
+def load_leaderboard():
+    ref = db.reference('leaderboard')
+    leaderboard = ref.get()
+    if leaderboard is None:
+        return []
+    return leaderboard
+
+def save_leaderboard(leaderboard):
+    ref = db.reference('leaderboard')
+    ref.set(leaderboard)
+
+def display_leaderboard(leaderboard):
+    if leaderboard:
+        print("\nLeaderboard:")
+        leaderboard = sorted(leaderboard, key=lambda x: x['score'], reverse=True)
+        for idx, entry in enumerate(leaderboard, start=1):
+            print(f"{idx}. {entry['name']} - {entry['score']} points")
+    else:
+        print("\nLeaderboard is empty")
 
 def load_data():
     with open('database.json', 'r') as file:
         return json.load(file)
-    
-def play_game(continent):
+
+def play_game(continent_data):
     points = 0
-    random.shuffle(continent)
-    for entry in continent:
+    random.shuffle(continent_data)
+    for entry in continent_data:
         capital = entry['capital']
         country = entry['country']
         difficulty = entry['difficulty'].lower()
@@ -30,18 +58,27 @@ def play_game(continent):
             print(f"Wrong! The capital of {country} is {capital}")
     return points
 
-
 def main():
+    initialise_database()
+
     name = input("What is your name? ").capitalize()
     print(f"Hello {name}! Welcome to the Capital City Game!")
-    vaild_continents = ['Africa', 'Asia' , 'Europe', 'North America', 'South America', 'Oceania']
+    
+    valid_continents = ['Africa', 'Asia', 'Europe', 'North America', 'South America', 'Oceania']
     continent = input("Which continent would you like to play: ").capitalize()
-    while continent not in vaild_continents:
-        print("Invaild input. Please try again")
+    while continent not in valid_continents:
+        print("Invalid input. Please try again.")
         continent = input("Which continent would you like to play: ").capitalize()
 
     data = load_data()
-    points = play_game(data[continent])
+    continent_data = data[continent]
+    points = play_game(continent_data)
+
+    leaderboard = load_leaderboard()
+    leaderboard.append({'name': name, 'score': points})
+    save_leaderboard(leaderboard)
+
+    display_leaderboard(leaderboard)
 
 if __name__ == '__main__':
     main()
