@@ -21,7 +21,7 @@ This repo is a guess the capital city game. The program uses a JSON file to hand
 - Change the UI so it says ``pass`` if the user doesn't input and ``wrong`` if the user does input something, but not the correct answer 🔜
 - Leaderboard:
     - Add an inital leaderboard ✅
-    - Add subfolders for each continent 🔜
+    - Add subfolders for each continent ✅
     - Make sure if someone has multiple games, that every game isn't listed on the leaderboard, just their top score 🔜
 
 - Once the project is completed, compile it to a ``.exe`` file 🔜
