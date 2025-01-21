@@ -4,16 +4,13 @@ import json
 import random
 import firebase_admin
 from firebase_admin import credentials, db
+from tabulate import tabulate
 
 def initialise_database():
     cred = credentials.Certificate('credentials.json')
     firebase_admin.initialize_app(cred, {
         'databaseURL': 'https://capital-city-game-leaderboard-default-rtdb.firebaseio.com/'
     })
-
-def generate_login_code():
-    code = f"{random.randint(1000, 9999)}"
-    return code
 
 def validate_login_code(stored_code, entered_code):
     return stored_code == entered_code
@@ -33,8 +30,12 @@ def display_leaderboard(leaderboard):
     if leaderboard:
         print("\nLeaderboard:")
         leaderboard = sorted(leaderboard, key=lambda x: x['score'], reverse=True)
+        
+        table_data = []
         for idx, entry in enumerate(leaderboard, start=1):
-            print(f"{idx}. {entry['name']} - {entry['score']} points")
+            table_data.append([idx, entry['name'], entry['score']])
+
+        print(tabulate(table_data, headers=["Rank", "Name", "Score"], tablefmt="fancy_grid"))
     else:
         print("\nLeaderboard is empty")
 
@@ -63,6 +64,9 @@ def play_game(continent_data):
                 print("+3 points!")
         elif len(answer) == 0:
             print(f"Pass. The correct answer was {capital}")
+        elif answer.lower() == "exit":
+            print("Exiting game...")
+            break
         else:
             print(f"Wrong! The capital of {country} is {capital}")
     return points
@@ -97,7 +101,11 @@ def main():
 
     else:
         name = input("What is your name? ").capitalize()
-        login_code = generate_login_code()
+        login_code = input("Create your 4-digit login code: ")
+        while len(login_code) != 4 or not login_code.isdigit():
+            print("Invalid code. Please enter a 4-digit number.")
+            login_code = input("Create your 4-digit login code: ")
+
         print(f"Welcome {name}! Your login code is: {login_code}")
 
     continent = input("Which continent would you like to play: ").capitalize()
@@ -119,7 +127,7 @@ def main():
             break
 
     if not player_exists:
-        leaderboard.append({'name': name, 'score': points, 'login_code': login_code if not played_before == 'yes' else entry['login_code']})
+        leaderboard.append({'name': name, 'score': points, 'login_code': login_code})
 
     save_leaderboard(continent, leaderboard)
     display_leaderboard(leaderboard)
