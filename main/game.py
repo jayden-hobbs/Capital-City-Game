@@ -5,6 +5,9 @@ import random
 import firebase_admin
 from firebase_admin import credentials, db
 from tabulate import tabulate
+from colorama import Fore, Back, Style, init
+
+init(autoreset=True)
 
 def initialise_database():
     cred = credentials.Certificate('credentials.json')
@@ -28,7 +31,7 @@ def save_leaderboard(continent, leaderboard):
 
 def display_leaderboard(leaderboard):
     if leaderboard:
-        print("\nLeaderboard:")
+        print(Fore.CYAN + "\nLeaderboard:")
         leaderboard = sorted(leaderboard, key=lambda x: x['score'], reverse=True)
         
         table_data = []
@@ -37,7 +40,7 @@ def display_leaderboard(leaderboard):
 
         print(tabulate(table_data, headers=["Rank", "Name", "Score"], tablefmt="fancy_grid"))
     else:
-        print("\nLeaderboard is empty")
+        print(Fore.RED + "\nLeaderboard is empty")
 
 def load_data():
     with open('database.json', 'r') as file:
@@ -50,9 +53,10 @@ def play_game(continent_data):
         capital = entry['capital']
         country = entry['country']
         difficulty = entry['difficulty'].lower()
-        answer = input(f"What is the capital of {country}? ").capitalize()
+        print(Fore.YELLOW + f"\nWhat is the capital of {country}?")
+        answer = input("Your answer: ").capitalize()
         if answer.lower() == capital.lower():
-            print("Correct!")
+            print(Fore.GREEN + "Correct!")
             if difficulty == "easy":
                 points += 1
                 print("+1 point!")
@@ -63,23 +67,24 @@ def play_game(continent_data):
                 points += 3
                 print("+3 points!")
         elif len(answer) == 0:
-            print(f"Pass. The correct answer was {capital}")
+            print(Fore.MAGENTA + f"Pass. The correct answer was {capital}")
         elif answer.lower() == "exit":
-            print("Exiting game...")
+            print(Fore.YELLOW + "Exiting game...")
+            print(f"Your final score is: {points}")
             break
         else:
-            print(f"Wrong! The capital of {country} is {capital}")
+            print(Fore.RED + f"Wrong! The capital of {country} is {capital}")
     return points
 
 def main():
     initialise_database()
 
-    played_before = input("Have you played before? (yes/no): ").lower()
+    played_before = input(Fore.CYAN + "Have you played before? (yes/no): ").lower()
     valid_continents = ['Africa', 'Asia', 'Europe', 'North America', 'South America', 'Oceania']
 
     if played_before == 'yes':
-        name = input("What is your name? ").capitalize()
-        login_code = input("Enter your 4-digit login code: ")
+        name = input(Fore.CYAN + "What is your name? ").capitalize()
+        login_code = input(Fore.CYAN + "Enter your 4-digit login code: ")
 
         valid_login = False
         continent = None
@@ -96,22 +101,22 @@ def main():
                 break
 
         if not valid_login:
-            print("Invalid login. Please try again.")
+            print(Fore.RED + "Invalid login. Please try again.")
             return
 
     else:
-        name = input("What is your name? ").capitalize()
-        login_code = input("Create your 4-digit login code: ")
+        name = input(Fore.CYAN + "What is your name? ").capitalize()
+        login_code = input(Fore.CYAN + "Create your 4-digit login code: ")
         while len(login_code) != 4 or not login_code.isdigit():
-            print("Invalid code. Please enter a 4-digit number.")
-            login_code = input("Create your 4-digit login code: ")
+            print(Fore.RED + "Invalid code. Please enter a 4-digit number.")
+            login_code = input(Fore.CYAN + "Create your 4-digit login code: ")
 
-        print(f"Welcome {name}! Your login code is: {login_code}")
+        print(Fore.GREEN + f"Welcome {name}! Your login code is: {login_code}")
 
-    continent = input("Which continent would you like to play: ").capitalize()
+    continent = input(Fore.CYAN + "Which continent would you like to play: ").capitalize()
     while continent not in valid_continents:
-        print("Invalid input. Please try again.")
-        continent = input("Which continent would you like to play: ").capitalize()
+        print(Fore.RED + "Invalid input. Please try again.")
+        continent = input(Fore.CYAN + "Which continent would you like to play: ").capitalize()
 
     data = load_data()
     continent_data = data[continent]
