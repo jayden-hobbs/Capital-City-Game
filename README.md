@@ -39,6 +39,7 @@ This repo is a guess the capital city game. The program uses a JSON file to hand
 ## 🔧 Tools Used
 [![Visual Studio Code](https://img.shields.io/badge/-VS%20Code-007ACC?style=for-the-badge&logo=visualstudio&logoColor=white)](https://code.visualstudio.com/)
 ![Git](https://img.shields.io/badge/-Git-F05032?style=for-the-badge&logo=git&logoColor=white&labelColor=F05032&logoWidth=0&width=200&height=50)
+![Firebase](https://img.shields.io/badge/-Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white&labelColor=FFCA28&logoWidth=0&width=200&height=50)
 
 ---
 
