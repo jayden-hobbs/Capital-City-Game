@@ -64,6 +64,8 @@ def play_game(continent_data):
             elif difficulty == "hard":
                 points += 3
                 print("+3 points!")
+        elif len(answer) == 0:
+            print(f"Pass. The correct answer was {capital}")
         else:
             print(f"Wrong! The capital of {country} is {capital}")
     return points
