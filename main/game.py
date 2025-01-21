@@ -2,7 +2,6 @@
 
 import json
 import random
-import hashlib
 import firebase_admin
 from firebase_admin import credentials, db
 
@@ -14,12 +13,10 @@ def initialise_database():
 
 def generate_login_code():
     code = f"{random.randint(1000, 9999)}"
-    hashed_code = hashlib.sha256(code.encode()).hexdigest()
-    return code, hashed_code
+    return code
 
-def validate_login_code(stored_hash, entered_code):
-    entered_hash = hashlib.sha256(entered_code.encode()).hexdigest()
-    return entered_hash == stored_hash
+def validate_login_code(stored_code, entered_code):
+    return stored_code == entered_code
 
 def load_leaderboard(continent):
     ref = db.reference(f'leaderboard/{continent}')
@@ -100,13 +97,13 @@ def main():
 
     else:
         name = input("What is your name? ").capitalize()
-        login_code, hashed_code = generate_login_code()
+        login_code = generate_login_code()
         print(f"Welcome {name}! Your login code is: {login_code}")
 
+    continent = input("Which continent would you like to play: ").capitalize()
+    while continent not in valid_continents:
+        print("Invalid input. Please try again.")
         continent = input("Which continent would you like to play: ").capitalize()
-        while continent not in valid_continents:
-            print("Invalid input. Please try again.")
-            continent = input("Which continent would you like to play: ").capitalize()
 
     data = load_data()
     continent_data = data[continent]
@@ -122,7 +119,7 @@ def main():
             break
 
     if not player_exists:
-        leaderboard.append({'name': name, 'score': points, 'login_code': hashed_code if not played_before == 'yes' else entry['login_code']})
+        leaderboard.append({'name': name, 'score': points, 'login_code': login_code if not played_before == 'yes' else entry['login_code']})
 
     save_leaderboard(continent, leaderboard)
     display_leaderboard(leaderboard)
