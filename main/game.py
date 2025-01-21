@@ -80,7 +80,7 @@ def main():
     initialise_database()
 
     played_before = input(Fore.CYAN + "Have you played before? (yes/no): ").lower()
-    valid_continents = ['Africa', 'Asia', 'Europe', 'North America', 'South America', 'Oceania']
+    valid_continents = ['Africa', 'Asia', 'Europe', 'North America', 'South America', 'Oceania', 'All']
 
     if played_before == 'yes':
         name = input(Fore.CYAN + "What is your name? ").capitalize()
@@ -113,13 +113,17 @@ def main():
 
         print(Fore.GREEN + f"Welcome {name}! Your login code is: {login_code}")
 
-    continent = input(Fore.CYAN + "Which continent would you like to play: ").capitalize()
+    continent = input(Fore.CYAN + "Which continent would you like to play? (Enter 'All' for every continent): ").capitalize()
     while continent not in valid_continents:
         print(Fore.RED + "Invalid input. Please try again.")
-        continent = input(Fore.CYAN + "Which continent would you like to play: ").capitalize()
+        continent = input(Fore.CYAN + "Which continent would you like to play? (Enter 'All' for every continent): ").capitalize()
 
     data = load_data()
-    continent_data = data[continent]
+    if continent == 'All':
+        continent_data = sum(data.values(), [])
+    else:
+        continent_data = data[continent]
+        
     points = play_game(continent_data)
 
     leaderboard = load_leaderboard(continent)
@@ -136,6 +140,19 @@ def main():
 
     save_leaderboard(continent, leaderboard)
     display_leaderboard(leaderboard)
+
+    if continent == 'All':
+        all_continents_leaderboard = load_leaderboard("All Continents")
+        player_exists_in_all = False
+        for entry in all_continents_leaderboard:
+            if entry['name'].lower() == name.lower():
+                player_exists_in_all = True
+                if points > entry['score']:
+                    entry['score'] = points
+                break
+        if not player_exists_in_all:
+            all_continents_leaderboard.append({'name': name, 'score': points, 'login_code': login_code})
+
 
 if __name__ == '__main__':
     main()
