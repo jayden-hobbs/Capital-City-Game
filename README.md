@@ -1,4 +1,3 @@
-# Capital-City-Game
 ## 🗂️ About This Repo
 [![Repo Size](https://img.shields.io/github/repo-size/jayden-hobbs/Capital-City-Game?style=for-the-badge&logo=github&logoColor=white&labelColor=black&color=brightgreen)](https://github.com/jayden-hobbs/Capital-City-Game)
 [![GitHub Issues](https://img.shields.io/github/issues/jayden-hobbs/Capital-City-Game?style=for-the-badge&logo=github&logoColor=white&labelColor=black&color=0078D4)](https://github.com/jayden-hobbs/Capital-City-Game/issues)
@@ -21,7 +20,7 @@ This repo is a guess the capital city game. The program uses a JSON file to hand
 - Make sure the user can only choose a valid continent and prompt them till they do so ✅
 - Change the UI so it says ``pass`` if the user doesn't input and ``wrong`` if the user does input something, but not the correct answer 🔜
 - Leaderboard:
-    - Add an inital leaderboard 🔜
+    - Add an inital leaderboard ✅
     - Add subfolders for each continent 🔜
     - Make sure if someone has multiple games, that every game isn't listed on the leaderboard, just their top score 🔜
 
