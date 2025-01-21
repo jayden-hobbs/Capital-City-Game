@@ -26,8 +26,13 @@ This repo is a guess the capital city game. The program uses a JSON file to hand
 
 - Once the project is completed, compile it to a ``.exe`` file 🔜
 
+## Forgotten your Login? 😧
+
+Don't worry! Message me with your name and estimated high score and I will send your login code back to you! 
+
 
 ---
+
 
 ## 🖋️ Languages Used
 
