@@ -1,7 +1,6 @@
 ## 🗂️ About This Repo
 [![Repo Size](https://img.shields.io/github/repo-size/jayden-hobbs/Capital-City-Game?style=for-the-badge&logo=github&logoColor=white&labelColor=black&color=brightgreen)](https://github.com/jayden-hobbs/Capital-City-Game)
 [![GitHub Issues](https://img.shields.io/github/issues/jayden-hobbs/Capital-City-Game?style=for-the-badge&logo=github&logoColor=white&labelColor=black&color=0078D4)](https://github.com/jayden-hobbs/Capital-City-Game/issues)
-[![GitHub Forks](https://img.shields.io/github/forks/jayden-hobbs/Capital-City-Game?style=for-the-badge&logo=github&logoColor=white&labelColor=black&color=FC6D26)](https://github.com/jayden-hobbs/Capital-City-Game/network)
 [![GitHub Stars](https://img.shields.io/github/stars/jayden-hobbs/Capital-City-Game?style=for-the-badge&logo=github&logoColor=white&labelColor=black&color=FFD700)](https://github.com/jayden-hobbs/Capital-City-Game/stargazers)
 [![GitHub License](https://img.shields.io/github/license/jayden-hobbs/Capital-City-Game?style=for-the-badge&logo=github&logoColor=white&labelColor=black&color=08C918)](https://github.com/jayden-hobbs/Capital-City-Game/blob/main/LICENSE)
 
